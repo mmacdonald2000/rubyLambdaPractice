@@ -1,3 +1,4 @@
+# Encryption for eM licenses using "crypt19-rb" gem
 require 'crypt/rijndael'
 require 'base64'
 
@@ -27,15 +28,21 @@ class EMCrypt
 end
 
 def lambda_handler(event:, context:)
-  toencrypt = "test123"
-  toencrypt = event['key2']
+  # toencrypt = "test123"
+  puts "eM License Encryption"
+  toencrypt = event['to_encrypt']
   encrypted = EMCrypt.encrypt(toencrypt)
   decrypted = EMCrypt.decrypt(encrypted)
+  puts 'Unencrypted STRING'
   puts toencrypt
+  puts 'Encrypted STRING'
   puts encrypted
+  puts 'Decrypted STRING'
   puts decrypted
-  license = event['license']
+  license = event['em_license']
+  puts 'Encrypted LICENSE'
   puts license
+  puts 'Decrypted LICENSE'
   puts EMCrypt.decrypt(license)
   return decrypted
 end

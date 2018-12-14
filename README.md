@@ -10,16 +10,16 @@ string (logs will contain print statements of license decryption)
 
 ### to deploy
 Create function file w/ Gemfile  
-$ bundle install $  
-$ bundle install --deployment $  
+ ` bundle install `   
+ ` bundle install --deployment `   
 Create a template.yaml file    
-$ sam package --template-file template.yaml \   
+` sam package --template-file template.yaml \   
  --output-template-file packaged-template.yaml \  
---s3-bucket <YOUR S3 BUCKET NAME> \  $
+--s3-bucket <YOUR S3 BUCKET NAME> \ `  
 then  
-$ sam deploy --template-file packaged-template.yaml \  
+` sam deploy --template-file packaged-template.yaml \  
  --stack-name <STACK NAME> \  
- --capabilities CAPABILITY_IAM $   
+ --capabilities CAPABILITY_IAM `     
 
 ## eaiLicenseLambda
 This is unnecessary since we have solved decryption with Node.js

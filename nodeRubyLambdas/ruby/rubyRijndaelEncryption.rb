@@ -28,21 +28,22 @@ class EMCrypt
 end
 
 def lambda_handler(event:, context:)
-  # toencrypt = "test123"
-  puts "eM License Encryption"
-  toencrypt = event['to_encrypt']
-  encrypted = EMCrypt.encrypt(toencrypt)
-  decrypted = EMCrypt.decrypt(encrypted)
-  puts 'Unencrypted STRING'
-  puts toencrypt
-  puts 'Encrypted STRING'
-  puts encrypted
-  puts 'Decrypted STRING'
-  puts decrypted
-  license = event['em_license']
-  puts 'Encrypted LICENSE'
+
+  toBeEncrypted = event['to_encrypt'] ? event['to_encrypt'] : nil
+  toBeDecrypted = event['to_decrypt'] ? event['to_decrypt'] : nil
+
+  puts toBeEncrypted
+  puts toBeDecrypted
+
+  if toBeEncrypted
+    license = EMCrypt.encrypt(toBeEncrypted)
+  elsif toBeDecrypted
+    license = EMCrypt.decrypt(toBeDecrypted)
+  else
+    license = nil
+  end
+
   puts license
-  puts 'Decrypted LICENSE'
-  puts EMCrypt.decrypt(license)
-  return decrypted
+
+  return license
 end

@@ -27,7 +27,7 @@ export async function main(event, context, callback) {
   })
 
   let params = {
-    FunctionName: "arn:aws:cloudformation:us-west-2:454513015747:stack/rubyEncryption/18e44e40-fe59-11e8-b5cc-0af0816e310e",
+    FunctionName: "rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
     Payload: JSON.stringify(encryptPayload),

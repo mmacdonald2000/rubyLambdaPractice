@@ -15,7 +15,6 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs8.10
   stage: dev
   region: us-west-2
   iamRoleStatements:
@@ -33,7 +32,13 @@ provider:
 functions:
   nodeMain:
     handler: handler.main
+    runtime: nodejs8.10
     events:
       - http:
           path: main
           method: get
+  rubyEncryption:
+    handler: ruby/rubyRijndaelEncryption
+    runtime: ruby2.5
+    environmentVariables:
+      RIJNDAEL_PASSWORD: ${env:RIJNDAEL_PASSWORD}

@@ -22,42 +22,49 @@ export async function main(event, context, callback) {
 
   const aws = require('aws-sdk');
 
-  const rubyLambda = new aws.Lambda({
+  const lambda = new aws.Lambda({
     region: 'us-west-2'
   })
 
-  const encryptParams = {
-    FunctionName: "rijndaelEncrypt",
+  let params = {
+    FunctionName: "arn:aws:cloudformation:us-west-2:454513015747:stack/rubyEncryption/18e44e40-fe59-11e8-b5cc-0af0816e310e",
     InvocationType: "RequestResponse",
     LogType: "Tail",
-    Payload: encryptPayload,
+    Payload: JSON.stringify(encryptPayload),
   };
 
-  const decryptParams = {
-    FunctionName: "rijndaelEncrypt",
-    InvocationType: "RequestResponse",
-    LogType: "Tail",
-    Payload: decryptPayload,
-  }
+  // console.log(params.Payload);
 
-  rubyLambda.invoke(encryptParams, function(err, data){
+  console.log("Encrypting data");
+
+  lambda.invoke(params, function(err, data){
     if (err) {
+      console.log("encrypt failure");
       console.log(err, err.stack);
     } else {
+      console.log("encrypt success");
       console.log(data);
     }
   });
 
-  rubyLambda.invoke(decryptParams, function(err, data){
+  params.Payload = JSON.stringify(decryptPayload);
+
+  // console.log(params.Payload);
+
+  let unencrypted = '';
+  console.log("Decrypting data");
+
+  lambda.invoke(params, function(err, data){
     if(err){
+      console.log("decrypt failure");
       console.log(err,err.stack);
     } else {
+      console.log("decrypt success");
       console.log(data);
+      unencrypted = data;
     }
-  })
+  });
 
-
-
-
+  return unencrypted;
 
 }

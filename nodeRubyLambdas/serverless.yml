@@ -40,5 +40,5 @@ functions:
   rubyEncryption:
     handler: ruby/rubyRijndaelEncryption
     runtime: ruby2.5
-    environmentVariables:
+    environment:
       RIJNDAEL_PASSWORD: ${env:RIJNDAEL_PASSWORD}

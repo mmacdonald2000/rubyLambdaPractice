@@ -36,9 +36,9 @@ def lambda_handler(event:, context:)
   puts toBeDecrypted
 
   if toBeEncrypted
-    license = EMCrypt.encrypt(toBeEncrypted)
+    license = JSON.generate({"encrypted": EMCrypt.encrypt(toBeEncrypted)})
   elsif toBeDecrypted
-    license = EMCrypt.decrypt(toBeDecrypted)
+    license = JSON.generate({"decrypted": EMCrypt.decrypt(toBeDecrypted)})
   else
     license = nil
   end

@@ -1,7 +1,7 @@
 {
   "name": "nodeRubyLambdas",
   "version": "1.1.0",
-  "description": "A Node.js starter for the Serverless Framework with async/await and unit test support",
+  "description": "A Node.js AWS Lambda responsible for contacting a Ruby Lambda",
   "main": "handler.js",
   "scripts": {
     "test": "jest"

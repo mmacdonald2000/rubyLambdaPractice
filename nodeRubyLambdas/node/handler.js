@@ -1,7 +1,10 @@
 // Node Lambda to call Ruby Lambda
 
+const aws = require('aws-sdk');
+// TODO: rewrite in ES6 w/ no webpack - does it work?
 
-export async function main(event, context, callback) {
+
+export function main(event, context, callback) {
   // to access event variables:
   // event.variable_name
 
@@ -20,7 +23,6 @@ export async function main(event, context, callback) {
   const encryptPayload = { 'to_encrypt': emLicenseEncrypt };
   const decryptPayload = { 'to_decrypt': emLicenseDecrypt };
 
-  const aws = require('aws-sdk');
 
   const lambda = new aws.Lambda({
     region: 'us-west-2'

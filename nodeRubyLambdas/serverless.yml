@@ -29,16 +29,37 @@ provider:
   #
   #environment: ${file(env.yml):${self:provider.stage}}
 
+  package:
+    individually: true
+
 functions:
   nodeMain:
-    handler: handler.main
+    handler: node/handler.main
     runtime: nodejs8.10
     events:
       - http:
           path: main
           method: get
+    package:
+      individually: true
+      include:
+        - node/**
+        - handler.js
+      exclude:
+        - .git/**
+        - .travis.yml
   rubyEncryption:
-    handler: ruby/rubyRijndaelEncryption
+    handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
-      RIJNDAEL_PASSWORD: ${env:RIJNDAEL_PASSWORD}
+      RIJNDAEL_PASSWORD: 'w4rf2gr9e6lm24bgf1xsd2v'
+    package:
+      individually: true
+      include:
+        - vendor/**
+        - rubyRijndaelEncryption.rb
+      exclude:
+        - Gemfile
+        - Gemfile.lock
+        - Rakefile
+        - spec/**

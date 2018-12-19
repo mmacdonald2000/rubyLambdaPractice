@@ -34,7 +34,7 @@ provider:
 
 functions:
   nodeMain:
-    handler: node/handler.main
+    handler: handler.main
     runtime: nodejs8.10
     events:
       - http:
@@ -49,7 +49,7 @@ functions:
         - .git/**
         - .travis.yml
   rubyEncryption:
-    handler: ruby/rubyRijndaelEncryption.lambda_handler
+    handler: rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
       RIJNDAEL_PASSWORD: 'w4rf2gr9e6lm24bgf1xsd2v'

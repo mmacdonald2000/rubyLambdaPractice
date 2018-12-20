@@ -1,4 +1,36 @@
-# Serverless Node.js Starter
+# nodeRubyLambdas
+Node Lambda executes Ruby Lambda when triggered, uses Serverless Node.js Starter; see documentation below.
+
+## node/handler.js
+Node Lambda triggers ruby/rubyRijndaelEncryption.rb twice.    
+1) Passes a license to encrypt, logs will contain print of json object with encrypted license string.   
+2) Passes an existing license to decrypt, logs will contain print of json object with decrypted license object.  This object will be returned from the lambda.    
+
+### input
+Only standard event and context needed.
+
+### output
+Json from Ruby Lambda of unencrypted license  
+
+## /ruby/RijndaelEncryption.rb
+
+### input
+Json object with either "to_encrypt" or "to_decrypt" key
+
+### output
+"to_encrypt" key given: return Json object w/ encrypted license stored in "encrypted" key  
+"to_decrypt" key given: return Json object w/ decrypted license stored in "decrypted" key
+
+#### deployment
+As of 12/20/18, you must deploy with
+``` bash
+$ serverless deploy function -f <functionName>
+```
+nodeMain can deploy as is, but you'll have to comment out Webpack on Lines 6 & 11-14 of serverless.yml to deploy rubyEncryption
+
+
+
+## Serverless Node.js Starter
 
 A Serverless starter that adds ES7 syntax, serverless-offline, environment variables, and unit test support. Part of the [Serverless Stack](http://serverless-stack.com) guide.
 
@@ -39,7 +71,7 @@ export const hello = async (event, context, callback) => {
   callback(null, response);
 };
 
-const message = ({ time, ...rest }) => new Promise((resolve, reject) => 
+const message = ({ time, ...rest }) => new Promise((resolve, reject) =>
   setTimeout(() => {
     resolve(`${rest.copy} (with a delay)`);
   }, time * 1000)

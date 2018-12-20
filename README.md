@@ -29,7 +29,7 @@ This is unnecessary since we have solved decryption with Node.js
 ## nodeRubyLambdas / ruby
 Node Lambda should execute Ruby Lambda when triggered.
 
-### handler.js
+### node/handler.js
 Node Lambda triggers ruby/rubyRijndaelEncryption.rb twice.    
 1) Passes a license to encrypt, logs will contain print of json object with encrypted license string.   
 2) Passes an existing license to decrypt, logs will contain print of json object with decrypted license object.  This object will be returned from the lambda.    
@@ -38,11 +38,7 @@ Node Lambda triggers ruby/rubyRijndaelEncryption.rb twice.
 Only standard event and context needed.
 
 #### output
-Json from Ruby Lambda of unencrypted license
-
-
-### /ruby was removed from /nodeRubyLambdas as webpack kept breaking on the .rb files
-I decided to separate the two lambdas in the interest of figuring out how to trigger the one from the other instead of troubleshooting webpack right away.
+Json from Ruby Lambda of unencrypted license  
 
 ### /ruby/RijndaelEncryption.rb
 

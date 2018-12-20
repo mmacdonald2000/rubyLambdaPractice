@@ -3,15 +3,16 @@ service: nodeRubyLambdas
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
-  - serverless-webpack
+  # - serverless-webpack
   - serverless-offline
-
-# serverless-webpack configuration
-# Enable auto-packing of external modules
+  - serverless-hooks-plugin
 custom:
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
+  # webpack:
+  #   webpackConfig: ./webpack.config.js
+  #   includeModules: true
+  hooks:
+    package:initialize:
+      - bundle install --deployment
 
 provider:
   name: aws
@@ -64,3 +65,4 @@ functions:
         - Rakefile
         - spec/**
         - node/**
+        - node_modules/**

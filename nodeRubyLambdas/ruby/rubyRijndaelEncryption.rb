@@ -29,16 +29,16 @@ end
 
 def lambda_handler(event:, context:)
 
-  toBeEncrypted = event['to_encrypt'] ? event['to_encrypt'] : nil
-  toBeDecrypted = event['to_decrypt'] ? event['to_decrypt'] : nil
+  toBeEncrypted = event['to_encrypt'] ? event['to_encrypt'] : ''
+  toBeDecrypted = event['to_decrypt'] ? event['to_decrypt'] : ''
 
-  puts toBeEncrypted
-  puts toBeDecrypted
-
-  if toBeEncrypted
-    license = JSON.generate({"encrypted": EMCrypt.encrypt(toBeEncrypted)})
-  elsif toBeDecrypted
-    license = JSON.generate({"decrypted": EMCrypt.decrypt(toBeDecrypted)})
+  if toBeEncrypted.size > 0
+    encryptedLicense = EMCrypt.encrypt(JSON.generate(toBeEncrypted))
+    encryptedLicenseWOspaces = encryptedLicense.gsub("\n", "")
+    license = {"encrypted" => encryptedLicenseWOspaces}
+  elsif toBeDecrypted.size > 0
+    puts toBeDecrypted
+    license = {"decrypted" => JSON.parse(EMCrypt.decrypt(toBeDecrypted))}
   else
     license = nil
   end

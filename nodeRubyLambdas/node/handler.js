@@ -1,14 +1,11 @@
 // Node Lambda to call Ruby Lambda
-
-const aws = require('aws-sdk');
-// TODO: rewrite in ES6 w/ no webpack - does it work?
-
+var aws = require('aws-sdk');
 
 export function main(event, context, callback) {
   // to access event variables:
   // event.variable_name
 
-  const emLicenseEncrypt = {
+  var emLicenseEncrypt = {
     id: 45,
     sn: 12345,
     host_id: '3a:00:a8:40:42:00',
@@ -18,55 +15,56 @@ export function main(event, context, callback) {
     connections: 1,
   };
 
-  const emLicenseDecrypt = 'tcL+msWBGLQzCa6dkA63aU2VH86MKWZQ9i8rwY3XdHMHBPeSPjdJ2BmGSyu7JaUaX9OZb7YNxcQaF5eOouoLH/RNRfbw/OK7Bao1RjcqmkXDvjNzN+msrVmOBudMas2/ZB8TvxTjHf29S4r7wvXqROl4gqFSIzNSHKOIrBYmNFrRASM4Ei80cMrpIdrq3UXsFphqEC2iktISGBhgs3Xr7ujGpYoGDub+1UTE6Vg0BDI= ';
+  var emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
 
-  const encryptPayload = { 'to_encrypt': emLicenseEncrypt };
-  const decryptPayload = { 'to_decrypt': emLicenseDecrypt };
+  var encryptPayload = { to_encrypt: emLicenseEncrypt };
+  var decryptPayload = { to_decrypt: `${emLicenseDecrypt}` };
 
 
-  const lambda = new aws.Lambda({
+  var lambda = new aws.Lambda({
     region: 'us-west-2'
   })
 
-  let params = {
-    FunctionName: "rubyEncryption",
+  var params = {
+    FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
     Payload: JSON.stringify(encryptPayload),
   };
 
-  // console.log(params.Payload);
-
+  // Invoke the Ruby Lambda to encrypt some data
   console.log("Encrypting data");
 
-  lambda.invoke(params, function(err, data){
+  var encrypted = lambda.invoke(params, function(err, data){
     if (err) {
-      console.log("encrypt failure");
+      console.log("Encrypt Failure");
       console.log(err, err.stack);
     } else {
-      console.log("encrypt success");
-      console.log(data);
+      console.log("Encrypt Success");
+      var encrypted = JSON.parse(data.Payload)
+      console.log(encrypted);
+      return encrypted;
     }
   });
 
-  params.Payload = JSON.stringify(decryptPayload);
-
-  // console.log(params.Payload);
-
-  let unencrypted = '';
-  console.log("Decrypting data");
-
-  lambda.invoke(params, function(err, data){
-    if(err){
-      console.log("decrypt failure");
-      console.log(err,err.stack);
-    } else {
-      console.log("decrypt success");
-      console.log(data);
-      unencrypted = data;
-    }
-  });
-
-  return unencrypted;
+  // // To see decryption: uncomment this section and comment out Lines 36 - 48
+  //
+  // // Invoke the Ruby Lambda to decrypt some data
+  // console.log("Decrypting data");
+  //
+  // params.Payload = JSON.stringify(decryptPayload);
+  //
+  // var decrypted = lambda.invoke(params, function(err, data){
+  //   if(err){
+  //     console.log("decrypt failure");
+  //     console.log(err,err.stack);
+  //   } else {
+  //     console.log("decrypt success");
+  //     console.log(data);
+  //     var unencrypted = JSON.parse(data.Payload);
+  //     console.log("unencrypted: ", unencrypted);
+  //     return unencrypted;
+  //   }
+  // });
 
 }

@@ -63,3 +63,4 @@ functions:
         - Gemfile.lock
         - Rakefile
         - spec/**
+        - node/**

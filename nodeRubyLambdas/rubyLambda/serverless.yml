@@ -1,0 +1,53 @@
+# NOTE: update this with your service name
+service: rubyLambda
+
+plugins:
+  - serverless-offline
+  - serverless-hooks-plugin
+custom:
+  hooks:
+    package:initialize:
+      - bundle install
+      - bundle install --deployment
+  stage: ${opt:stage, self:provider.stage}
+
+provider:
+  name: aws
+  stage: dev
+  region: us-west-2
+  runtime: ruby2.5
+
+  # To load environment variables externally
+  # rename env.example to env.yml and uncomment
+  # the following line. Also, make sure to not
+  # commit your env.yml.
+  #
+  #environment: ${file(env.yml):${self:provider.stage}}
+
+  package:
+    individually: true
+
+functions:
+  rubyEncryption:
+    handler: rubyRijndaelEncryption.lambda_handler
+    runtime: ruby2.5
+    environment:
+      RIJNDAEL_PASSWORD: 
+    package:
+      include:
+        - vendor/**
+        - rubyRijndaelEncryption.rb
+      exclude:
+        - Gemfile
+        - Gemfile.lock
+        - Rakefile
+        - spec/**
+        - node/**
+        - node_modules/**
+
+    Outputs:
+      handler: rubyRijndaelEncryption.lambda_handler
+      Value:
+        Ref: rubyEncryption
+      Export:
+        Name: rubyEncryption

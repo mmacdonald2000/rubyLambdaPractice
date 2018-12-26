@@ -46,6 +46,6 @@ functions:
     handler: rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
-      RIJNDAEL_PASSWORD: 'w4rf2gr9e6lm24bgf1xsd2v'
+      ${file(env.yml):encryption}
     package:
       individually: true

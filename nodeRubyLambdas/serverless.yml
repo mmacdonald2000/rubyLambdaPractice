@@ -3,15 +3,15 @@ service: nodeRubyLambdas
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
-  - serverless-webpack
+  # - serverless-webpack
   - serverless-offline
 
 # serverless-webpack configuration
 # Enable auto-packing of external modules
 custom:
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
+  # webpack:
+  #   webpackConfig: ./webpack.config.js
+  #   includeModules: true
 
 provider:
   name: aws
@@ -31,6 +31,7 @@ provider:
 
   package:
     individually: true
+    excludeDevDependencies: true
 
 functions:
   nodeMain:
@@ -41,20 +42,19 @@ functions:
           path: main
           method: get
     package:
-      individually: true
       include:
         - node/**
         - handler.js
       exclude:
-        - .git/**
-        - .travis.yml
+        - ruby/**
+        - rubyLambda/**
+        - node_modules/**
   rubyEncryption:
     handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
-      RIJNDAEL_PASSWORD: 'w4rf2gr9e6lm24bgf1xsd2v'
+      ${file(env.yml):encryption
     package:
-      individually: true
       include:
         - vendor/**
         - rubyRijndaelEncryption.rb

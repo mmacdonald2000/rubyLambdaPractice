@@ -22,7 +22,7 @@ provider:
   # the following line. Also, make sure to not
   # commit your env.yml.
   #
-  #environment: ${file(env.yml):${self:provider.stage}}
+  environment: ${file(env.yml):${self:provider.stage}}
 
   package:
     individually: true
@@ -31,8 +31,6 @@ functions:
   rubyEncryption:
     handler: rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
-    environment:
-      RIJNDAEL_PASSWORD: 
     package:
       include:
         - vendor/**

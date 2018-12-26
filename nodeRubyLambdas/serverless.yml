@@ -1,28 +1,33 @@
 # NOTE: update this with your service name
-service: nodeRubyLambdas
+service: nodeLambdas
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
-  # - serverless-webpack
+  - serverless-webpack
   - serverless-offline
-  - serverless-hooks-plugin
+  # - serverless-hooks-plugin
 custom:
-  # webpack:
-  #   webpackConfig: ./webpack.config.js
-  #   includeModules: true
-  hooks:
-    package:initialize:
-      - bundle install --deployment
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
+  # hooks:
+  #   package:initialize:
+  #     - bundle install --deployment
+  stage: ${opt:stage, self:provider.stage}
 
 provider:
   name: aws
   stage: dev
   region: us-west-2
+  # environment:
+  #   rubyEncryptionLambda:
+  #     - 'Fn::ImportValue': ${self:custom.stage}-rubyEncryptionArn
   iamRoleStatements:
     - Effect: Allow
       Action:
         - lambda:InvokeFunction
-      Resource: "*"
+      Resource:
+        - 'Fn::ImportValue': rubyEncryption
   # To load environment variables externally
   # rename env.example to env.yml and uncomment
   # the following line. Also, make sure to not
@@ -41,28 +46,3 @@ functions:
       - http:
           path: main
           method: get
-    package:
-      individually: true
-      include:
-        - node/**
-        - handler.js
-      exclude:
-        - .git/**
-        - .travis.yml
-  rubyEncryption:
-    handler: ruby/rubyRijndaelEncryption.lambda_handler
-    runtime: ruby2.5
-    environment:
-      RIJNDAEL_PASSWORD: 'w4rf2gr9e6lm24bgf1xsd2v'
-    package:
-      individually: true
-      include:
-        - vendor/**
-        - rubyRijndaelEncryption.rb
-      exclude:
-        - Gemfile
-        - Gemfile.lock
-        - Rakefile
-        - spec/**
-        - node/**
-        - node_modules/**

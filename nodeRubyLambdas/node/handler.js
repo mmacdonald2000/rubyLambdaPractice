@@ -26,7 +26,7 @@ export function main(event, context, callback) {
   })
 
   var params = {
-    FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
+    FunctionName: process.env.rubyEncryptionLambda,
     InvocationType: "RequestResponse",
     LogType: "Tail",
     Payload: JSON.stringify(encryptPayload),

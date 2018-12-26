@@ -28,9 +28,9 @@ module.exports = {
         exclude: [/node_modules/, /\.rb$/ ]
       },
       {
-        test: /\.rb$/,
-        loader: 'ignore-loader',
-        // exclude: [/\.rb$/]
+        // test: /\.rb$/,
+        // loader: 'ignore-loader',
+        // exclude: /\.rb$/
       }
     ]
   }

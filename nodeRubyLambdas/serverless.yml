@@ -10,7 +10,7 @@ plugins:
 # Enable auto-packing of external modules
 custom:
   webpack:
-    webpackConfig: ./webpack.config.js
+    webpackConfig: ./node/webpack.config.js
     includeModules: true
 
 provider:
@@ -34,7 +34,7 @@ provider:
 
 functions:
   nodeMain:
-    handler: handler.main
+    handler: node/handler.main
     runtime: nodejs8.10
     events:
       - http:
@@ -42,10 +42,26 @@ functions:
           method: get
     package:
       individually: true
+      include:
+        - node/**
+        - handler.js
+      exclude:
+        - ruby/**
+        - rubyLambda/**
+        - node/node_modules/@babel
   rubyEncryption:
-    handler: rubyRijndaelEncryption.lambda_handler
+    handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
       ${file(env.yml):encryption}
     package:
       individually: true
+      include:
+        - vendor/**
+        - rubyRijndaelEncryption.rb
+      exclude:
+        - Gemfile
+        - Gemfile.lock
+        - Rakefile
+        - spec/**
+        - node/**

@@ -10,7 +10,7 @@ plugins:
 # Enable auto-packing of external modules
 custom:
   webpack:
-    webpackConfig: ./node/webpack.config.js
+    webpackConfig: ./webpack.config.js
     includeModules: true
 
 provider:

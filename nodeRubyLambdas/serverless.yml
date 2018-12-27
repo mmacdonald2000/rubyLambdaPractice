@@ -46,8 +46,8 @@ functions:
         - node/**
         - handler.js
       exclude:
-        - .git/**
-        - .travis.yml
+        - ruby/**
+        - rubyLambda/**
   rubyEncryption:
     handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5

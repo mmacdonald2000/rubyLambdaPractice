@@ -64,3 +64,4 @@ functions:
         - Rakefile
         - spec/**
         - node/**
+        - rubyLambda/**

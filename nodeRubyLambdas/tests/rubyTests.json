@@ -1,0 +1,15 @@
+encryptionTest: {
+  "to_encrypt": {
+    "id": 45,
+    "sn": 12345,
+    "host_id": "3a:00:a8:40:42:00",
+    "type": "eM",
+    "start_date": "2018-12-19T21:24:07.537Z",
+    "end_date": "2022-03-05T08:00:00.000Z",
+    "connections": 1
+  }
+}
+
+decryptionTest: {
+  "to_decrypt": "ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8= "
+}

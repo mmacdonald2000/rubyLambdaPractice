@@ -3,15 +3,13 @@ service: nodeRubyLambdas
 
 # Use the serverless-webpack plugin to transpile ES6
 plugins:
-  # - serverless-webpack
   - serverless-offline
+  - serverless-hooks-plugin
 
-# serverless-webpack configuration
-# Enable auto-packing of external modules
 custom:
-  # webpack:
-  #   webpackConfig: ./webpack.config.js
-  #   includeModules: true
+  hooks:
+    package:initialize:
+      - bundle install --deployment
 
 provider:
   name: aws
@@ -27,11 +25,11 @@ provider:
   # the following line. Also, make sure to not
   # commit your env.yml.
   #
-  #environment: ${file(env.yml):${self:provider.stage}}
+  # environment: ${file(env.yml):${self:provider.stage}}
 
-  package:
-    individually: true
-    excludeDevDependencies: true
+package:
+  individually: true
+
 
 functions:
   nodeMain:
@@ -42,25 +40,48 @@ functions:
           path: main
           method: get
     package:
-      include:
-        - node/**
-        - handler.js
+      individually: true
+      excludeDevDependencies: true
       exclude:
-        - ruby/**
-        - rubyLambda/**
-        - node_modules/**
+        - "**/**"
+      include:
+        - node/handler.js
+  nodeEncrypt:
+    handler: node/encryption.main
+    runtime: nodejs8.10
+    events:
+      - http:
+          path: encrypt
+          method: get
+    package:
+      individually: true
+      excludeDevDependencies: true
+      exclude:
+        - "**/**"
+      include:
+        - node/encryption.js
+  nodeDecrypt:
+    handler: node/decryption.main
+    runtime: nodejs8.10
+    events:
+      - http:
+          path: decrypt
+          method: get
+    package:
+      individually: true
+      excludeDevDependencies: true
+      exclude:
+        - "**/**"
+      include:
+        - node/decryption.js
   rubyEncryption:
     handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5
     environment:
-      ${file(env.yml):encryption
+      ${file(env.yml):${self:provider.stage}}
     package:
+      exclude:
+        - "**/**"
       include:
         - vendor/**
-        - rubyRijndaelEncryption.rb
-      exclude:
-        - Gemfile
-        - Gemfile.lock
-        - Rakefile
-        - spec/**
-        - node/**
+        - ruby/rubyRijndaelEncryption.rb

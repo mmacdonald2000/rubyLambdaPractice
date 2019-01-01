@@ -1,18 +1,19 @@
 // Node Lambda to call Ruby Lambda
 var aws = require('aws-sdk');
+const _ = require('lodash');
 
 module.exports.main = function (event, context, callback) {
 
-  var emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
+  const emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
 
-  var decryptPayload = { to_decrypt: `${emLicenseDecrypt}` };
+  const decryptPayload = { to_decrypt: `${emLicenseDecrypt}` };
 
 
-  var lambda = new aws.Lambda({
+  const lambda = new aws.Lambda({
     region: 'us-west-2'
   })
 
-  var params = {
+  const params = {
     FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
@@ -23,7 +24,7 @@ module.exports.main = function (event, context, callback) {
   console.log("Decrypting data");
 
 
-  var decrypted = lambda.invoke(params, function(err, data){
+  const decrypted = () => lambda.invoke(params, function(err, data){
     if(err){
       console.log("decrypt failure");
       console.log(err,err.stack);
@@ -35,5 +36,12 @@ module.exports.main = function (event, context, callback) {
       return unencrypted;
     }
   });
+
+
+
+  const testdependency = _.join(['Hello', 'webpack'], ' ');
+  console.log(testdependency);
+
+
 
 }

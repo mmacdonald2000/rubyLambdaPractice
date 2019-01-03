@@ -1,7 +1,5 @@
-# NOTE: update this with your service name
 service: nodeRubyLambdas
 
-# Use the serverless-webpack plugin to transpile ES6
 plugins:
   - serverless-offline
   - serverless-hooks-plugin

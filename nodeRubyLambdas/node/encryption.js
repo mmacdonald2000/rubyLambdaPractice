@@ -14,7 +14,7 @@ module.exports.main = function (event, context, callback) {
   };
 
   var encryptPayload = { to_encrypt: emLicenseEncrypt };
-  
+
   var lambda = new aws.Lambda({
     region: 'us-west-2'
   })
@@ -29,16 +29,18 @@ module.exports.main = function (event, context, callback) {
   // Invoke the Ruby Lambda to encrypt some data
   console.log("Encrypting data");
 
-  var encrypted = lambda.invoke(params, function(err, data){
+  return lambda.invoke(params, function(err, data){
     if (err) {
       console.log("Encrypt Failure");
       console.log(err, err.stack);
     } else {
       console.log("Encrypt Success");
-      var encrypted = JSON.parse(data.Payload)
+      var encrypted = data.Payload
       console.log(encrypted);
       return encrypted;
     }
   });
+
+
 
 }

@@ -361,4 +361,4 @@ module.exports = require("source-map-support/register");
 /***/ })
 
 /******/ });
-//# sourceMappingURL=main.bundle.js.map
+//# sourceMappingURL=bundle.js.map

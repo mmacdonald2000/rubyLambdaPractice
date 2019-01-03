@@ -29,6 +29,7 @@ provider:
 
 package:
   individually: true
+  excludeDevDependencies: true
 
 
 functions:
@@ -40,8 +41,6 @@ functions:
           path: main
           method: get
     package:
-      individually: true
-      excludeDevDependencies: true
       exclude:
         - "**/**"
       include:
@@ -54,8 +53,6 @@ functions:
           path: encrypt
           method: get
     package:
-      individually: true
-      excludeDevDependencies: true
       exclude:
         - "**/**"
       include:
@@ -68,8 +65,6 @@ functions:
           path: decrypt
           method: get
     package:
-      individually: true
-      excludeDevDependencies: true
       exclude:
         - "**/**"
       include:

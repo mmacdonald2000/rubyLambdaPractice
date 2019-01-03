@@ -33,7 +33,7 @@ package:
 
 functions:
   nodeMain:
-    handler: node/handler.main
+    handler: dist/bundle.main
     runtime: nodejs8.10
     events:
       - http:
@@ -46,9 +46,8 @@ functions:
         - "**/**"
       include:
         - dist/**
-        - node/handler.js
   nodeEncrypt:
-    handler: node/encryption.encryption
+    handler: dist/bundle.encryption
     runtime: nodejs8.10
     events:
       - http:
@@ -61,9 +60,8 @@ functions:
         - "**/**"
       include:
         - dist/**
-        - node/encryption.js
   nodeDecrypt:
-    handler: node/decryption.decryption
+    handler: dist/bundle.decryption
     runtime: nodejs8.10
     events:
       - http:
@@ -75,7 +73,7 @@ functions:
       exclude:
         - "**/**"
       include:
-        - node/decryption.js
+        - dist/**
   rubyEncryption:
     handler: ruby/rubyRijndaelEncryption.lambda_handler
     runtime: ruby2.5

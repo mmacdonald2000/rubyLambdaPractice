@@ -1,5 +1,5 @@
 # nodeRubyLambdas
-Node Lambda executes Ruby Lambda when triggered, uses Serverless Node.js Starter; see documentation below.
+Node Lambda executes Ruby Lambda when triggered, uses Serverless Node.js Starter; see documentation below.  encryption.js and decryption.js were added to test individual deployment.  lodash was added to decryption.js to test dependency deployment in the Node Lambdas.  
 
 ## node/handler.js
 Node Lambda triggers ruby/rubyRijndaelEncryption.rb twice.    
@@ -46,6 +46,16 @@ As of 12/27/18, use
 $ serverless deploy
 ```
 Ruby dependencies will automatically be bundled before deploying.
+
+## Branches
+### master / noWebpack
+Working project, does not use webpack of any kind
+### FunctioningNodeRubyLambdas
+Works, but need to comment out serverless-webpack to deploy ruby
+### plainWebpack
+An attempt to add vanilla webpack, does not deploy properly
+### separateYML
+An attempt to deploy Node and Ruby Lambdas with separate serverless.yml files and reference each other. Cannnot deploy as export does not work in Node serverless.yml
 
 
 

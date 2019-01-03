@@ -93,41 +93,58 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _stringify = __webpack_require__(/*! babel-runtime/core-js/json/stringify */ "babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+__webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Node Lambda to call Ruby Lambda
 var aws = __webpack_require__(/*! aws-sdk */ "aws-sdk");
+var _ = __webpack_require__(/*! lodash */ "lodash");
 
-module.exports.main = function (event, context, callback) {
+module.exports.decryption = function (event, context, callback) {
 
-  const emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
+  var emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
 
-  const decryptPayload = { to_decrypt: `${emLicenseDecrypt}` };
+  var decryptPayload = { to_decrypt: '' + emLicenseDecrypt };
 
-  const lambda = new aws.Lambda({
+  var lambda = new aws.Lambda({
     region: 'us-west-2'
   });
 
-  const params = {
+  var params = {
     FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
-    Payload: JSON.stringify(decryptPayload)
+    Payload: (0, _stringify2.default)(decryptPayload)
   };
 
   // Invoke the Ruby Lambda to decrypt some data
   console.log("Decrypting data");
 
-  const decrypted = () => lambda.invoke(params, function (err, data) {
-    if (err) {
-      console.log("decrypt failure");
-      console.log(err, err.stack);
-    } else {
-      console.log("decrypt success");
-      console.log(data);
-      var unencrypted = JSON.parse(data.Payload);
-      console.log("unencrypted: ", unencrypted);
-      return unencrypted;
-    }
-  });
+  var decrypted = function decrypted() {
+    return lambda.invoke(params, function (err, data) {
+      if (err) {
+        console.log("decrypt failure");
+        console.log(err, err.stack);
+      } else {
+        console.log("decrypt success");
+        console.log(data);
+        var unencrypted = JSON.parse(data.Payload);
+        console.log("unencrypted: ", unencrypted);
+        return unencrypted;
+      }
+    });
+  };
+
+  var testdependency = _.join(['Hello', 'webpack'], ' ');
+  console.log(testdependency);
 };
 
 /***/ }),
@@ -139,10 +156,21 @@ module.exports.main = function (event, context, callback) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _stringify = __webpack_require__(/*! babel-runtime/core-js/json/stringify */ "babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+__webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Node Lambda to call Ruby Lambda
 var aws = __webpack_require__(/*! aws-sdk */ "aws-sdk");
 
-module.exports.main = function (event, context, callback) {
+module.exports.encryption = function (event, context, callback) {
 
   var emLicenseEncrypt = {
     id: 45,
@@ -164,7 +192,7 @@ module.exports.main = function (event, context, callback) {
     FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
-    Payload: JSON.stringify(encryptPayload)
+    Payload: (0, _stringify2.default)(encryptPayload)
   };
 
   // Invoke the Ruby Lambda to encrypt some data
@@ -192,6 +220,17 @@ module.exports.main = function (event, context, callback) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _stringify = __webpack_require__(/*! babel-runtime/core-js/json/stringify */ "babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+__webpack_require__(/*! source-map-support/register */ "source-map-support/register");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Node Lambda to call Ruby Lambda
 var aws = __webpack_require__(/*! aws-sdk */ "aws-sdk");
 
@@ -212,7 +251,7 @@ module.exports.main = function (event, context, callback) {
   var emLicenseDecrypt = 'ae/ci2iRkRubT0+k/GwzU2kr5+6b/2htcA0Ww5RMmlO9LqSqYTV+2mW+3C4ylwNb9Bv1oBdYCz3f8qRc9NWFsY2Fn8wNGQncW7Pq53MrihRufZT7LDAYsni5rfHQp1gV+a/23aa+My8SzmXXut3I28auewbAD8mbxYfTAd+hnFLFeRVnIkkGUIUoGUlJypBf6LJPwceBRsPBSM0ATaIJ8YvW2SXkP1SjkwQL2fHn6S8=';
 
   var encryptPayload = { to_encrypt: emLicenseEncrypt };
-  var decryptPayload = { to_decrypt: `${emLicenseDecrypt}` };
+  var decryptPayload = { to_decrypt: '' + emLicenseDecrypt };
 
   var lambda = new aws.Lambda({
     region: 'us-west-2'
@@ -222,7 +261,7 @@ module.exports.main = function (event, context, callback) {
     FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
     InvocationType: "RequestResponse",
     LogType: "Tail",
-    Payload: JSON.stringify(encryptPayload)
+    Payload: (0, _stringify2.default)(encryptPayload)
   };
 
   // Invoke the Ruby Lambda to encrypt some data
@@ -286,7 +325,40 @@ module.exports = __webpack_require__(/*! ./node/handler */"./node/handler.js");
 
 module.exports = require("aws-sdk");
 
+/***/ }),
+
+/***/ "babel-runtime/core-js/json/stringify":
+/*!*******************************************************!*\
+  !*** external "babel-runtime/core-js/json/stringify" ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("babel-runtime/core-js/json/stringify");
+
+/***/ }),
+
+/***/ "lodash":
+/*!*************************!*\
+  !*** external "lodash" ***!
+  \*************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("lodash");
+
+/***/ }),
+
+/***/ "source-map-support/register":
+/*!**********************************************!*\
+  !*** external "source-map-support/register" ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("source-map-support/register");
+
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map
+//# sourceMappingURL=main.bundle.js.map

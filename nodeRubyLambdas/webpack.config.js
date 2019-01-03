@@ -9,7 +9,7 @@ module.exports = {
   mode: "development",
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js"
+    filename: "[name].bundle.js"
   },
   externals: [nodeExternals()],
   module: {
@@ -22,7 +22,12 @@ module.exports = {
         exclude: [
           path.resolve(__dirname, "node_modules")
         ],
-        loader: "babel-loader"
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["babel-preset-env"]
+          }
+        }
       }
     ]
   },

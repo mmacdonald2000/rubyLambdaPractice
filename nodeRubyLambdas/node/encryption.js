@@ -1,7 +1,7 @@
 // Node Lambda to call Ruby Lambda
 var aws = require('aws-sdk');
 
-module.exports.main = function (event, context, callback) {
+module.exports.encryption = function (event, context, callback) {
 
   var emLicenseEncrypt = {
     id: 45,
@@ -14,7 +14,7 @@ module.exports.main = function (event, context, callback) {
   };
 
   var encryptPayload = { to_encrypt: emLicenseEncrypt };
-  
+
   var lambda = new aws.Lambda({
     region: 'us-west-2'
   })

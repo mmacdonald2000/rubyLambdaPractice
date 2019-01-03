@@ -45,9 +45,10 @@ functions:
       exclude:
         - "**/**"
       include:
+        - dist/**
         - node/handler.js
   nodeEncrypt:
-    handler: node/encryption.main
+    handler: node/encryption.encryption
     runtime: nodejs8.10
     events:
       - http:
@@ -59,9 +60,10 @@ functions:
       exclude:
         - "**/**"
       include:
+        - dist/**
         - node/encryption.js
   nodeDecrypt:
-    handler: node/decryption.main
+    handler: node/decryption.decryption
     runtime: nodejs8.10
     events:
       - http:

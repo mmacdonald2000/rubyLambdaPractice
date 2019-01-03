@@ -4,6 +4,7 @@
   "description": "A sample Nodejs project with Ruby Lambda",
   "main": "handler.js",
   "scripts": {
+    "build": "webpack",
     "test": "jest"
   },
   "author": "Megan Macdonald",

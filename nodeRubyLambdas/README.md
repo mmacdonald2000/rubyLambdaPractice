@@ -47,6 +47,7 @@ Only standard event and context needed. No specific values are needed to trigger
 ### output  
 Json containing status code and error or decrypted license
 
+
 ## /ruby/RijndaelEncryption.rb
 
 ### input
@@ -55,7 +56,6 @@ Json object with either "to_encrypt" or "to_decrypt" key
 ### output
 "to_encrypt" key given: return Json object w/ encrypted license stored in "encrypted" key  
 "to_decrypt" key given: return Json object w/ decrypted license stored in "decrypted" key
-
 
 
 

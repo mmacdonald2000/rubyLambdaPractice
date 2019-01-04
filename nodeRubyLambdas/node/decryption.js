@@ -1,6 +1,7 @@
 // Node Lambda to call Ruby Lambda
 const AWS = require('aws-sdk');
 const Lambda = new AWS.Lambda({region: 'us-west-2'});
+const _ = require('lodash');
 
 
 module.exports.decrypt = async (event, context) => {
@@ -28,6 +29,9 @@ module.exports.decrypt = async (event, context) => {
       }
     }).promise();
     // console.log("unencrypted: ", decrypted);
+
+    const testdependency = _.join(['Hello', 'webpack'], ' ');
+    console.log(testdependency);
 
     return {
       statusCode: 200,

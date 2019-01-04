@@ -44,7 +44,7 @@ functions:
       include:
         - node/handler.js
   nodeEncrypt:
-    handler: node/encryption.main
+    handler: node/encryption.encrypt
     runtime: nodejs8.10
     events:
       - http:
@@ -56,7 +56,7 @@ functions:
       include:
         - node/encryption.js
   nodeDecrypt:
-    handler: node/decryption.main
+    handler: node/decryption.decrypt
     runtime: nodejs8.10
     events:
       - http:

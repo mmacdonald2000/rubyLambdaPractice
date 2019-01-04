@@ -1,46 +1,55 @@
 // Node Lambda to call Ruby Lambda
-var aws = require('aws-sdk');
+const AWS = require('aws-sdk');
+const Lambda = new AWS.Lambda({region: 'us-west-2'});
 
-module.exports.main = function (event, context, callback) {
+module.exports.encrypt = async (event, context) => {
 
-  var emLicenseEncrypt = {
-    id: 45,
-    sn: 12345,
-    host_id: '3a:00:a8:40:42:00',
-    type: 'eM',
-    start_date: new Date(),
-    end_date: new Date(2022, 2, 5, 8),
-    connections: 1,
-  };
+  try {
+    // a fake license object to test encryption
+    const emLicenseEncrypt = {
+      id: 45,
+      sn: 12345,
+      host_id: '3a:00:a8:40:42:00',
+      type: 'eM',
+      start_date: new Date(),
+      end_date: new Date(2022, 2, 5, 8),
+      connections: 1,
+    };
 
-  var encryptPayload = { to_encrypt: emLicenseEncrypt };
+    // params tell the invoke function which function to invoke, how to invoke it, how to display invocation logs, and what data to send
+    const params = {
+      FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
+      InvocationType: "RequestResponse",
+      LogType: "Tail",
+      Payload: JSON.stringify({ to_encrypt: emLicenseEncrypt }),
+    };
 
-  var lambda = new aws.Lambda({
-    region: 'us-west-2'
-  })
+    console.log("Encrypting data");
 
-  var params = {
-    FunctionName: "nodeRubyLambdas-dev-rubyEncryption",
-    InvocationType: "RequestResponse",
-    LogType: "Tail",
-    Payload: JSON.stringify(encryptPayload),
-  };
+    // create variable to hold Ruby Lambda response
+    let encrypted = {};
 
-  // Invoke the Ruby Lambda to encrypt some data
-  console.log("Encrypting data");
+    // Invoke the Ruby Lambda, must use .promise() to use await here
+    await Lambda.invoke(params, (err, data) => {
+        if(data){
+          console.log("Encrypt Success");
+          encrypted = data.Payload
+        }
+    }).promise();
+    // console.log(encrypted);
 
-  return lambda.invoke(params, function(err, data){
-    if (err) {
-      console.log("Encrypt Failure");
-      console.log(err, err.stack);
-    } else {
-      console.log("Encrypt Success");
-      var encrypted = data.Payload
-      console.log(encrypted);
-      return encrypted;
-    }
-  });
+    // create return for this Lambda, encrypted has to be parsed because the return will automatically be stringified for us
+    return {
+      statusCode: 200,
+      body: JSON.parse(encrypted)
+    };
 
-
+  } catch (error) {
+    console.error(error.stack);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(error.message)
+    };
+  }
 
 }

@@ -2,12 +2,12 @@ service: nodeRubyLambdas
 
 plugins:
   - serverless-offline
-  - serverless-hooks-plugin
+  # - serverless-hooks-plugin
 
-custom:
-  hooks:
-    package:initialize:
-      - bundle install --deployment
+# custom:
+#   hooks:
+#     package:initialize:
+#       - bundle install --deployment
 
 provider:
   name: aws

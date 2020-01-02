@@ -1,6 +1,8 @@
 # rubyLambdaPractice
 practice writing AWS Lambda Functions with Ruby
 
+No longer maintained.
+
 ## emLicenseLambda
 Lambda executes Rijndael encryption from crypt19-rb module.
 
